@@ -1,6 +1,6 @@
 <template>
   <main class="container p-5 mx-auto">
-    <FeedSkeleton v-if="isLoading" />
+    <FeedSkeleton v-if="isLoading" class="mb-5" />
 
     <Feed
       v-else
@@ -25,6 +25,7 @@
           :description="episode.description"
           :pubDate="episode.pubDate"
           :duration="episode.enclosure.duration"
+          :guid="episode.guid"
         />
       </template>
     </section>
@@ -38,14 +39,14 @@ import FeedSkeleton from '@/components/Home/FeedSkeleton.vue'
 import Episode from '@/components/Home/Episode.vue'
 import EpisodeSkeleton from '@/components/Home/EpisodeSkeleton.vue'
 
-// Modules
-import { useEpisode } from '@/composable/useEpisode'
+// Api
+import { useEpisode } from '@/composable/api/useEpisode'
 
 export default {
   components: { Feed, FeedSkeleton, Episode, EpisodeSkeleton },
   setup() {
-    const { episodes, feed, error, getEpisode, isLoading } = useEpisode()
-    getEpisode()
+    const { episodes, feed, error, getEpisodes, isLoading } = useEpisode()
+    getEpisodes()
 
     return { episodes, feed, isLoading }
   },
