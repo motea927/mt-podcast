@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed bottom-0 left-0 right-0">
+  <div class="fixed bottom-0 left-0 right-0 border-t">
     <ThePlayerSeekBar
       @onClickSeekBar="onMutationTime"
       :currentEpisode="currentEpisode"
@@ -31,7 +31,7 @@ import ThePlayerControlBar from '@/components/common/ThePlayer/ThePlayerControlB
 
 // Modules
 import { computed, ref, toRefs } from '@vue/reactivity'
-import { watch } from '@vue/runtime-core'
+import { onBeforeUnmount, watch } from '@vue/runtime-core'
 import { useStore } from 'vuex'
 
 export default {
@@ -72,22 +72,26 @@ export default {
       store.commit('setCurrentEpisode', newEpisode)
     }
 
-    const onCanPlay = () => {
+    const onloadedmetadata = () => {
+      duration.value = audio.duration
       if (!isPlay.value) return
       audio.play()
     }
     audio.addEventListener('timeupdate', onTimeUpdate)
     audio.addEventListener('ended', onEnded)
-    audio.addEventListener('canplay', onCanPlay)
+    audio.addEventListener('loadedmetadata', onloadedmetadata)
+    onBeforeUnmount(() => {
+      audio.removeEventListener('timeupdate', onTimeUpdate)
+      audio.removeEventListener('ended', onEnded)
+      audio.removeEventListener('loadedmetadata', onloadedmetadata)
+    })
+
     const onMutationTime = (newTime) => {
       currentTime.value = newTime
       audio.currentTime = newTime
     }
 
     const duration = ref(0)
-    audio.onloadedmetadata = () => {
-      duration.value = audio.duration
-    }
 
     const isPlay = ref(false)
 

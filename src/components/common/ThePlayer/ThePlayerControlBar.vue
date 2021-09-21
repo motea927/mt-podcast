@@ -3,7 +3,11 @@
     class="grid items-center grid-cols-5 px-1 py-4 text-black  bg-gray-50 lg:rounded-b-xl sm:px-3 lg:px-1 xl:px-3 sm:grid-cols-7 lg:grid-cols-5 xl:grid-cols-7"
   >
     <!-- 聲音控制 -->
-    <button type="button" class="flex flex-wrap mx-auto mb-2">
+    <button
+      type="button"
+      class="flex flex-wrap mx-auto mb-2"
+      :class="showVolume ? '' : 'invisible'"
+    >
       <svg
         t="1632203862632"
         class="mx-auto icon"
@@ -248,6 +252,12 @@ export default {
       ctx.emit('onChangePlaybackRate', playbackRate)
     }
 
+    const showVolume = computed(() => {
+      const userAgent = navigator.userAgent
+      const isIosMobile = /iPhone|iPod|iPad/i.test(userAgent)
+
+      return !isIosMobile
+    })
     const onChangeVolume = (e) => {
       const newVolume = e.target.value / 100
       ctx.emit('onChangeVolume', newVolume)
@@ -264,6 +274,7 @@ export default {
       playbackRateList,
       onChangePlaybackRate,
       showPlaybackRateList,
+      showVolume,
       onChangeVolume,
     }
   },
