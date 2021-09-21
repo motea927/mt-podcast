@@ -22,12 +22,14 @@ export const useEpisode = () => {
         },
       })
 
+      const playList = [...response.data.items].reverse()
       episodes.value = response.data.items
       feed.value = response.data.feed
+      store.commit('setPlayList', playList)
       isLoading.value = false
     } catch (e) {
       isLoading.value = false
-      error.value = e.response.data || e.message
+      error.value = e.message || e.response.data
     }
   }
 

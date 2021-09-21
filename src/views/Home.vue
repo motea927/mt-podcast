@@ -1,5 +1,5 @@
 <template>
-  <main class="container p-5 mx-auto">
+  <main class="container p-5 mx-auto pb-96">
     <FeedSkeleton v-if="isLoading" class="mb-5" />
 
     <Feed

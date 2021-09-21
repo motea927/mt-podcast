@@ -1,5 +1,5 @@
 <template>
-  <main class="container p-5 mx-auto">
+  <main class="container p-5 mx-auto pb-96">
     <OverviewSkeleton v-if="isLoading" />
     <Overview
       v-else
@@ -8,6 +8,7 @@
       :author="episodeDetail.author"
       :duration="episodeDetail.enclosure.duration"
       :pubDate="episodeDetail.pubDate"
+      @onClickPlay="onClickPlay"
       class="mb-5"
     />
 
@@ -28,6 +29,8 @@ import { useRoute, useRouter } from 'vue-router'
 
 // Api
 import { useEpisodeDetail } from '@/composable/api/useEpisodeDetail'
+import { useStore } from 'vuex'
+import { watchEffect } from '@vue/runtime-core'
 
 export default {
   components: {
@@ -39,17 +42,24 @@ export default {
   setup() {
     const router = useRouter()
     const route = useRoute()
+    const store = useStore()
 
     const { episodeDetail, error, getEpisodeDetail, isLoading } =
       useEpisodeDetail()
-    const { guid } = route.query
+    watchEffect(() => {
+      const { guid } = route.query
+      if (!guid) {
+        router.push({ name: 'Home' })
+        return
+      }
+      getEpisodeDetail(guid)
+    })
 
-    if (!guid) {
-      router.push({ name: 'Home' })
+    const onClickPlay = () => {
+      store.commit('setCurrentEpisode', episodeDetail.value)
     }
 
-    getEpisodeDetail(guid)
-    return { episodeDetail, isLoading }
+    return { episodeDetail, isLoading, onClickPlay }
   },
 }
 </script>

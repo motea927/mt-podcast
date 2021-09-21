@@ -1,41 +1,14 @@
 <template>
   <router-link :to="{ name: 'EpisodeDetail', query: { guid: guid } }">
     <div
-      class="
-        w-full
-        p-4
-        mb-5
-        transition
-        duration-300
-        ease-in-out
-        bg-white
-        rounded
-        shadow-lg
-        cursor-pointer
-        hover:transform hover:-translate-y-1
-      "
+      class="w-full p-4 mb-5 transition duration-300 ease-in-out bg-white rounded shadow-lg cursor-pointer  hover:transform hover:-translate-y-1"
     >
       <div
-        class="
-          flex flex-col
-          items-center
-          justify-center
-          h-full
-          text-center
-          sm:flex-row sm:justify-start sm:text-left
-        "
+        class="flex flex-col items-center justify-center h-full text-center  sm:flex-row sm:justify-start sm:text-left"
       >
         <img
           alt="team"
-          class="
-            flex-shrink-0
-            object-cover object-center
-            w-48
-            h-48
-            mb-4
-            rounded-lg
-            sm:mb-0
-          "
+          class="flex-shrink-0 object-cover object-center w-48 h-48 mb-4 rounded-lg  sm:mb-0"
           :src="image"
         />
         <div class="flex-grow sm:pl-8">
@@ -54,7 +27,8 @@
 </template>
 
 <script>
-import { useTimeText } from '@/composable/utils/useTimeText'
+import { useTimeTextWithChinese } from '@/composable/utils/useTimeText'
+import { toRefs } from '@vue/reactivity'
 
 export default {
   props: {
@@ -84,7 +58,8 @@ export default {
     },
   },
   setup(props) {
-    const { timeText } = useTimeText(props.duration)
+    const { duration } = toRefs(props)
+    const { timeText } = useTimeTextWithChinese(duration)
 
     return { timeText }
   },

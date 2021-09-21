@@ -1,6 +1,7 @@
 import { ref } from '@vue/reactivity'
 import { axiosInstance } from '@/composable/api/axios'
 import router from '@/router'
+import store from '@/store'
 
 const episodeAPI = axiosInstance()
 
@@ -27,10 +28,15 @@ export const useEpisodeDetail = () => {
       )
 
       if (!episode) {
-        return router.push({ name: 'Home' })
+        router.push({ name: 'Home' })
+        isLoading.value = false
+        return
       }
 
+      const playList = [...response.data.items].reverse()
+
       episodeDetail.value = episode
+      store.commit('setPlayList', playList)
       isLoading.value = false
     } catch (e) {
       isLoading.value = false

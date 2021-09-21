@@ -1,40 +1,19 @@
 <template>
   <section
-    class="
-      container
-      mx-auto
-      flex
-      p-5
-      md:flex-row md:items-start
-      flex-col
-      items-center
-      bg-[#294C60]
-      text-white
-      rounded
-      shadow-lg
-    "
+    class="container flex flex-col items-center p-5 mx-auto text-white rounded shadow-lg  md:flex-row md:items-start bg-primary"
   >
     <div class="w-48 mb-10 md:mb-0">
       <img class="object-cover object-center rounded" alt="hero" :src="image" />
     </div>
     <div
-      class="
-        lg:flex-grow
-        md:w-1/2
-        lg:pl-24
-        md:pl-16
-        flex flex-col
-        md:items-start md:text-left
-        items-center
-        text-center
-      "
+      class="flex flex-col items-center text-center  lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 md:items-start md:text-left"
     >
-      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium">
+      <h1 class="mb-4 text-3xl font-medium title-font sm:text-4xl">
         {{ title }}
       </h1>
-      <h2 class="mb-5 flex justify-start items-center">
+      <h2 class="flex items-center justify-start mb-5">
         <svg
-          class="w-5 h-5 text-white mr-2"
+          class="w-5 h-5 mr-2 text-white"
           t="1631894931945"
           viewBox="0 0 1024 1024"
           version="1.1"

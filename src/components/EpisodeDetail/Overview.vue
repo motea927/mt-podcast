@@ -1,18 +1,6 @@
 <template>
   <section
-    class="
-      container
-      mx-auto
-      flex
-      p-5
-      md:flex-row md:items-start
-      flex-col
-      items-center
-      bg-[#294C60]
-      text-white
-      rounded
-      shadow-lg
-    "
+    class="container flex flex-col items-center p-5 mx-auto text-white rounded shadow-lg  md:flex-row md:items-start bg-primary"
   >
     <div class="w-48 mb-10 md:mb-0">
       <img class="object-cover object-center rounded" alt="hero" :src="image" />
@@ -48,7 +36,7 @@
       <p class="mb-5">{{ pubDate }}</p>
       <p class="mb-5 leading-relaxed whitespace-pre-wrap">{{ timeText }}</p>
 
-      <button>
+      <button @click="onClickPlay">
         <svg
           t="1632127702018"
           class="icon"
@@ -71,7 +59,8 @@
 </template>
 
 <script>
-import { useTimeText } from '@/composable/utils/useTimeText'
+import { useTimeTextWithChinese } from '@/composable/utils/useTimeText'
+import { toRefs } from '@vue/reactivity'
 
 export default {
   props: {
@@ -96,10 +85,15 @@ export default {
       required: true,
     },
   },
-  setup(props) {
-    const { timeText } = useTimeText(props.duration)
+  setup(props, ctx) {
+    const { duration } = toRefs(props)
+    const { timeText } = useTimeTextWithChinese(duration)
 
-    return { timeText }
+    const onClickPlay = () => {
+      ctx.emit('onClickPlay')
+    }
+
+    return { timeText, onClickPlay }
   },
 }
 </script>

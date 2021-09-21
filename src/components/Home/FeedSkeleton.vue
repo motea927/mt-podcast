@@ -1,19 +1,6 @@
 <template>
   <section
-    class="
-      container
-      mx-auto
-      flex
-      p-5
-      md:flex-row md:items-start
-      flex-col
-      items-center
-      bg-[#294C60]
-      text-white
-      rounded
-      shadow-lg
-      animate-pulse
-    "
+    class="container flex flex-col items-center p-5 mx-auto text-white rounded shadow-lg  md:flex-row md:items-start bg-primary animate-pulse"
   >
     <div class="w-48 h-48 mb-10 bg-gray-300 rounded md:mb-0"></div>
     <div

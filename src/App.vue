@@ -4,11 +4,31 @@
       <component :is="Component" />
     </transition>
   </router-view>
+
+  <ThePlayer v-if="currentEpisode" :currentEpisode="currentEpisode" />
 </template>
 
 <script>
+// Components
+import ThePlayer from '@/components/common/ThePlayer/ThePlayer.vue'
+
+// Modules
+import { useStore } from 'vuex'
+import { computed } from '@vue/reactivity'
+
 export default {
-  setup() {},
+  components: {
+    ThePlayer,
+  },
+  setup() {
+    const store = useStore()
+
+    const currentEpisode = computed(() => {
+      return store.state.currentEpisode
+    })
+
+    return { currentEpisode }
+  },
 }
 </script>
 
