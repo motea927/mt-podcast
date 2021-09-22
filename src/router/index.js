@@ -12,6 +12,10 @@ const routes = [
     name: 'EpisodeDetail',
     component: () => import('@/views/EpisodeDetail.vue'),
   },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/',
+  },
 ]
 
 const router = createRouter({
